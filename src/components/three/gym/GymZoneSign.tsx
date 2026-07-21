@@ -15,15 +15,18 @@ export function GymZoneSign({ sign }: GymZoneSignProps) {
 
     const context = canvas.getContext('2d')
     if (context) {
-      context.fillStyle = 'rgba(10, 14, 19, 0.78)'
+      context.fillStyle = 'rgba(10, 14, 19, 0.82)'
       context.fillRect(0, 0, canvas.width, canvas.height)
 
       context.strokeStyle = 'rgba(255, 255, 255, 0.08)'
       context.lineWidth = 2
       context.strokeRect(8, 8, canvas.width - 16, canvas.height - 16)
 
+      context.fillStyle = gymTheme.colors.marker
+      context.fillRect(26, canvas.height - 20, canvas.width - 52, 4)
+
       context.fillStyle = 'rgba(255, 255, 255, 0.78)'
-      context.font = '600 42px Aptos, Segoe UI, sans-serif'
+      context.font = '600 34px Aptos, Segoe UI, sans-serif'
       context.textAlign = 'center'
       context.textBaseline = 'middle'
       context.fillText(sign.title, canvas.width / 2, canvas.height / 2)
@@ -36,15 +39,15 @@ export function GymZoneSign({ sign }: GymZoneSignProps) {
 
   return (
     <group position={sign.position} rotation={sign.rotation}>
-      <mesh castShadow receiveShadow>
-        <boxGeometry args={[sign.size[0], sign.size[1], 0.06]} />
+      <mesh receiveShadow>
+        <boxGeometry args={[sign.size[0], sign.size[1], 0.03]} />
         <meshStandardMaterial
           color={gymTheme.colors.signFrame}
           roughness={0.46}
           metalness={0.28}
         />
       </mesh>
-      <mesh position={[0, 0, 0.04]}>
+      <mesh position={[0, 0, 0.016]}>
         <planeGeometry args={[sign.size[0] * 0.92, sign.size[1] * 0.76]} />
         <meshBasicMaterial map={texture} transparent toneMapped={false} />
       </mesh>

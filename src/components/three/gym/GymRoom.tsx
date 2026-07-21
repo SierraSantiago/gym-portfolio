@@ -1,9 +1,11 @@
-import { GymAmbientProps } from './GymAmbientProps'
-import { GymCeiling } from './GymCeiling'
 import { GymColumns } from './GymColumns'
+import { GymDecoration } from './GymDecoration'
 import { GymFloor } from './GymFloor'
+import { GymZoneSigns } from './GymZoneSigns'
+import { HangingLights } from './HangingLights'
 import { GymMirrors } from './GymMirrors'
 import { GymSign } from './GymSign'
+import { GymWallPanels } from './GymWallPanels'
 import { GymWalls } from './GymWalls'
 
 export function GymRoom() {
@@ -11,10 +13,12 @@ export function GymRoom() {
     <group>
       <GymFloor />
       <GymWalls />
+      <GymWallPanels />
       <GymColumns />
-      <GymCeiling />
+      <HangingLights />
       <GymMirrors />
-      <GymAmbientProps />
+      <GymDecoration />
+      <GymZoneSigns />
       <GymSign />
     </group>
   )

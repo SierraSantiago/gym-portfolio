@@ -1,8 +1,8 @@
 import { gymTheme } from '../../../config/gymTheme'
 import { gymRoom } from '../../../data/gymScene'
-import type { Tuple3 } from '../../../types/project'
+import type { Vector3Tuple } from '../../../types/gymAsset'
 
-const wallSegments: Array<{ position: Tuple3; size: Tuple3 }> = [
+const wallSegments: Array<{ position: Vector3Tuple; size: Vector3Tuple }> = [
   {
     position: [0, gymRoom.wallHeight / 2, -gymRoom.depth / 2],
     size: [gymRoom.width, gymRoom.wallHeight, gymRoom.wallThickness],
@@ -17,22 +17,22 @@ const wallSegments: Array<{ position: Tuple3; size: Tuple3 }> = [
   },
 ]
 
-const wallPanels: Array<{ position: Tuple3; size: Tuple3 }> = [
+const wallPanels: Array<{ position: Vector3Tuple; size: Vector3Tuple }> = [
   {
-    position: [0, 1.35, -gymRoom.depth / 2 + 0.06],
-    size: [gymRoom.width - 0.4, 2.1, 0.1],
+    position: [0, 1.25, -gymRoom.depth / 2 + 0.06],
+    size: [gymRoom.width - 0.4, 2.25, 0.1],
   },
   {
-    position: [-gymRoom.width / 2 + 0.06, 1.35, 0],
-    size: [0.1, 2.1, gymRoom.depth - 0.4],
+    position: [-gymRoom.width / 2 + 0.06, 1.3, 0.1],
+    size: [0.1, 2.2, gymRoom.depth - 0.8],
   },
   {
-    position: [gymRoom.width / 2 - 0.06, 1.35, 0],
-    size: [0.1, 2.1, gymRoom.depth - 0.4],
+    position: [gymRoom.width / 2 - 0.06, 1.3, 0.1],
+    size: [0.1, 2.2, gymRoom.depth - 0.8],
   },
 ]
 
-const baseboards: Array<{ position: Tuple3; size: Tuple3 }> = [
+const baseboards: Array<{ position: Vector3Tuple; size: Vector3Tuple }> = [
   {
     position: [0, 0.16, -gymRoom.depth / 2 + 0.08],
     size: [gymRoom.width - 0.36, 0.3, 0.14],
@@ -66,7 +66,7 @@ export function GymWalls() {
           <boxGeometry args={panel.size} />
           <meshStandardMaterial
             color={gymTheme.colors.wallAccent}
-            roughness={0.84}
+            roughness={0.8}
             metalness={0.08}
           />
         </mesh>

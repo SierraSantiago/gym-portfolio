@@ -31,36 +31,77 @@ src/
   components/
     three/
     ui/
+  config/
   data/
   scenes/
   styles/
   types/
+docs/
+  ASSET_LICENSES.md
+  DECORATION_PLAN.md
+public/
+  models/
+    gym/
 ```
 
-## Current Status
+## Phase 1.8 Status
 
-The repository is currently in Phase 1.5. It includes:
+The repository is now in Phase 1.8. It includes:
 
-- a fullscreen React Three Fiber canvas with ACESFilmic tone mapping, controlled DPR, and soft shadows;
-- an expanded greybox gym of roughly `20 x 14 x 5.2` units, prepared for future third-person navigation;
-- differentiated cardio, strength, functional, circulation, and future-project zones;
-- visible ceiling fixtures, revised lighting, structural columns, mirrors, benches, a plate tree, mats, and simple functional props;
-- three primitive-based machines connected to typed project data:
-  - `CareerPulse` as a treadmill in the cardio zone;
-  - `Risk Analysis AI` as a dumbbell rack in the strength zone;
-  - `Automation Pipeline` as a cable machine in the functional zone;
-- a temporary inspection camera with limits chosen to avoid cenital views and floor clipping;
-- an HTML overlay separated from the 3D layer and kept visually lighter over the canvas.
+- normalized GLB assets served from `public/models/gym`;
+- a typed model manifest and typed station data, so project-to-machine assignment lives in data instead of JSX;
+- the same three real machine integrations:
+- `CareerPulse` uses `treadmill.glb`
+- `Risk Analysis AI` uses `dumbbell-stand.glb`
+- `Automation Pipeline` uses `leg-press.glb`
+- a wider presentation camera with responsive configurations for wide desktop, laptop, and narrow screens;
+- complete removal of visible roof beams and rails;
+- a suspended-light-only ceiling presentation;
+- a rebuilt floor layering system with clean elevations instead of intersecting overlays;
+- corrected circulation, zone accents, and a more coherent continuous gym floor;
+- richer wall paneling, warmer and cooler lighting contrast, and improved mirror readability;
+- a decoration planning document for the next asset-integration phase;
+- the existing loading system with `Suspense`, `useProgress`, and in-canvas feedback.
 
-## Greybox Notes
+## Root Cause Of The Floor Artifacts
 
-- The environment still uses only primitive geometry and simple Three.js materials.
-- This phase prioritizes readability, spatial composition, circulation, and lighting over realism.
-- The layout intentionally leaves empty room for future project stations.
+The dark floor patches were caused by intersecting floor geometry:
 
-## Next Phases
+- zone slabs, seam strips, aisle accents, and front-edge strips overlapped vertically;
+- the aisle crossed the strength slab with shared volume;
+- seam strips and edge strips partially intersected each other;
+- the functional mat was also embedded into the zone slab.
 
-- Implement the player layer with movement and collisions.
-- Introduce character-scale traversal and camera behavior beyond temporary orbit inspection.
-- Replace selected primitives with more refined gym assets once the layout is stable.
-- Add richer project interactions only after the environment and traversal feel correct.
+Phase 1.8 fixes this by rendering the decorative floor layers as separated horizontal planes above a continuous base floor, with stable height ordering for zones, aisle, seams, and borders.
+
+## Architecture Notes
+
+- Runtime model URLs are centralized in `src/data/gymModelAssets.ts`.
+- Project stations stay data-driven through `src/data/projectStations.ts`.
+- Camera behavior is centralized in `src/config/gymCamera.ts`.
+- Floor zoning, architectural panels, leds, decoration, and lighting positions are configured in `src/data/gymScene.ts`.
+- Shared GLTF materials should not be mutated directly without first cloning the instance-local material.
+
+## Performance Notes
+
+- GLBs are loaded from public URLs instead of bundled imports.
+- DPR remains capped for stability.
+- Only the main directional light casts shadows.
+- Decorative LEDs use emissive materials instead of extra real lights.
+- No heavy post-processing or new dependencies were added.
+- `gym-equipment.glb` remains the heaviest asset in the current set, but it stays close to 1.1 MB and below the 5 MB warning threshold.
+
+## Credits And Licenses
+
+Asset provenance and license placeholders are tracked in [docs/ASSET_LICENSES.md](docs/ASSET_LICENSES.md) and still require source verification.
+
+## Current Limitations
+
+- There is still no player character, WASD movement, third-person camera, or collisions.
+- `gym-equipment.glb` still does not expose the "two plates plus mat" structure described in the planning notes; the scene continues to reuse verified named nodes from the actual hierarchy instead.
+- Decorative assets for towels, bottles, benches, plants, shelves, and props are still deferred to the next phase.
+- Final interactive project panels and proximity behavior are intentionally deferred.
+
+## Next Phase
+
+Phase 1.9 will focus on searching, selecting, and integrating free decorative assets for the prepared gym zones.

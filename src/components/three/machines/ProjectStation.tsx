@@ -1,26 +1,12 @@
-import type { JSX } from 'react'
 import { useMemo } from 'react'
 import { CanvasTexture } from 'three'
 import { useThree } from '@react-three/fiber'
 import { gymTheme } from '../../../config/gymTheme'
 import type { ProjectStationData } from '../../../types/project'
-import { CableMachine } from './CableMachine'
-import { DumbbellRack } from './DumbbellRack'
-import { TreadmillMachine } from './TreadmillMachine'
+import { GymModel } from '../models/GymModel'
 
 interface ProjectStationProps {
   station: ProjectStationData
-}
-
-function renderMachine(machineType: ProjectStationData['machineType']): JSX.Element {
-  switch (machineType) {
-    case 'treadmill':
-      return <TreadmillMachine />
-    case 'dumbbell-rack':
-      return <DumbbellRack />
-    case 'cable-machine':
-      return <CableMachine />
-  }
 }
 
 function ProjectStationLabel({ title }: Pick<ProjectStationData, 'title'>) {
@@ -28,14 +14,14 @@ function ProjectStationLabel({ title }: Pick<ProjectStationData, 'title'>) {
   const isCompactViewport = size.width < 900
   const texture = useMemo(() => {
     const canvas = document.createElement('canvas')
-    canvas.width = 640
-    canvas.height = 136
+    canvas.width = 500
+    canvas.height = 108
 
     const context = canvas.getContext('2d')
     if (context) {
       context.fillStyle = gymTheme.colors.labelBackground
       context.beginPath()
-      context.roundRect(8, 8, 624, 120, 64)
+      context.roundRect(8, 8, 484, 92, 46)
       context.fill()
 
       context.strokeStyle = gymTheme.colors.labelBorder
@@ -44,13 +30,13 @@ function ProjectStationLabel({ title }: Pick<ProjectStationData, 'title'>) {
 
       context.fillStyle = gymTheme.colors.marker
       context.beginPath()
-      context.arc(56, 68, 12, 0, Math.PI * 2)
+      context.arc(42, 54, 8, 0, Math.PI * 2)
       context.fill()
 
       context.fillStyle = gymTheme.colors.labelText
-      context.font = '600 30px Aptos, Segoe UI, sans-serif'
+      context.font = '600 24px Aptos, Segoe UI, sans-serif'
       context.textBaseline = 'middle'
-      context.fillText(title.toUpperCase(), 88, 68)
+      context.fillText(title.toUpperCase(), 68, 54)
     }
 
     const labelTexture = new CanvasTexture(canvas)
@@ -58,8 +44,8 @@ function ProjectStationLabel({ title }: Pick<ProjectStationData, 'title'>) {
     return labelTexture
   }, [title])
   const scale: [number, number, number] = isCompactViewport
-    ? [1.95, 0.42, 1]
-    : [2.3, 0.5, 1]
+    ? [1.32, 0.29, 1]
+    : [1.62, 0.34, 1]
 
   return (
     <sprite scale={scale}>
@@ -78,13 +64,13 @@ export function ProjectStation({ station }: ProjectStationProps) {
   return (
     <group
       position={station.position}
-      rotation={station.rotation ?? [0, 0, 0]}
+      rotation={station.rotation}
       scale={station.scale ?? 1}
     >
-      {renderMachine(station.machineType)}
+      <GymModel assetId={station.assetId} />
 
-      <mesh position={[0, 1.32, 0.08]} castShadow receiveShadow>
-        <cylinderGeometry args={[0.04, 0.04, 0.44, 16]} />
+      <mesh position={[0, 0.92, 0.12]} castShadow receiveShadow>
+        <cylinderGeometry args={[0.028, 0.028, 0.28, 14]} />
         <meshStandardMaterial
           color={gymTheme.colors.machineDetail}
           roughness={gymTheme.materials.machineMetal.roughness}
@@ -92,18 +78,18 @@ export function ProjectStation({ station }: ProjectStationProps) {
         />
       </mesh>
 
-      <mesh position={[0, 1.6, 0.08]} castShadow receiveShadow>
-        <sphereGeometry args={[0.08, 16, 16]} />
+      <mesh position={[0, 1.12, 0.12]} castShadow receiveShadow>
+        <sphereGeometry args={[0.05, 16, 16]} />
         <meshStandardMaterial
           color={gymTheme.colors.marker}
           emissive={gymTheme.colors.marker}
-          emissiveIntensity={1.5}
-          roughness={0.22}
+          emissiveIntensity={1.25}
+          roughness={0.28}
           metalness={0.12}
         />
       </mesh>
 
-      <group position={station.labelOffset ?? [0, 2.02, 0.78]}>
+      <group position={station.labelOffset}>
         <ProjectStationLabel title={station.title} />
       </group>
     </group>

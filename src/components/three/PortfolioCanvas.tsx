@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import {
   ACESFilmicToneMapping,
@@ -6,6 +7,9 @@ import {
 } from 'three'
 import { gymTheme } from '../../config/gymTheme'
 import { GymShowcaseScene } from '../../scenes/GymShowcaseScene'
+import { SceneErrorBoundary } from './SceneErrorBoundary'
+import { SceneLoader } from './SceneLoader'
+import './models/preloadGymModels'
 
 export function PortfolioCanvas() {
   return (
@@ -27,7 +31,11 @@ export function PortfolioCanvas() {
           gl.setClearColor(gymTheme.colors.background)
         }}
       >
-        <GymShowcaseScene />
+        <SceneErrorBoundary>
+          <Suspense fallback={<SceneLoader />}>
+            <GymShowcaseScene />
+          </Suspense>
+        </SceneErrorBoundary>
       </Canvas>
     </div>
   )

@@ -14,8 +14,8 @@ export function GymColumns() {
           <boxGeometry args={column.size} />
           <meshStandardMaterial
             color={gymTheme.colors.structure}
-            roughness={gymTheme.materials.structure.roughness}
-            metalness={gymTheme.materials.structure.metalness}
+            roughness={0.42}
+            metalness={0.28}
           />
         </mesh>
       ))}

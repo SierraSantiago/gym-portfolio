@@ -9,20 +9,21 @@ export function SceneLights() {
         groundColor={gymTheme.colors.hemisphereGround}
         intensity={0.84}
       />
-      <ambientLight color={gymTheme.colors.ambientLight} intensity={0.26} />
+      <ambientLight color={gymTheme.colors.ambientLight} intensity={0.2} />
       <directionalLight
         castShadow
         color={gymTheme.colors.keyLight}
-        intensity={2.25}
-        position={[11, 12, 7.5]}
-        shadow-bias={-0.00015}
-        shadow-camera-bottom={-14}
+        intensity={2.12}
+        position={[8.6, 11.2, 7.4]}
+        shadow-bias={-0.00018}
+        shadow-normalBias={0.02}
+        shadow-camera-bottom={-12}
         shadow-camera-far={36}
-        shadow-camera-left={-16}
-        shadow-camera-right={16}
-        shadow-camera-top={16}
-        shadow-mapSize-height={2048}
-        shadow-mapSize-width={2048}
+        shadow-camera-left={-14}
+        shadow-camera-right={14}
+        shadow-camera-top={14}
+        shadow-mapSize-height={1536}
+        shadow-mapSize-width={1536}
       />
       {zoneAccentLights.map((light) => (
         <pointLight
