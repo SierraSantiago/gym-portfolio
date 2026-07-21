@@ -2,7 +2,8 @@
 
 - This repository is a phase-based 3D portfolio built with React, TypeScript, Vite and React Three Fiber.
 - Keep scene primitives and rendering helpers in `src/components/three`, scene composition in `src/scenes`, and HTML interface in `src/components/ui`.
+- Centralize repeated scene dimensions, layout data, and visual tokens in `src/data` or `src/config` instead of scattering them across components.
 - Prefer small components with a single responsibility, strict TypeScript, and no `any`.
 - Do not add dependencies unless the existing stack cannot solve the task cleanly.
 - Keep documentation aligned with the current phase and validate changes with lint and build before finishing.
-- Phase 0 must stay lightweight: no physics, GLB assets, characters, postprocessing, or complex animation.
+- Keep early scene work lightweight until later phases explicitly require gameplay systems or external assets.

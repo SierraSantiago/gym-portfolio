@@ -1,25 +1,28 @@
-import { PerspectiveCamera } from '@react-three/drei'
-import { DebugCube } from '../components/three/DebugCube'
-import { SceneFloor } from '../components/three/SceneFloor'
+import { ProjectStation } from '../components/three/machines/ProjectStation'
+import { GymRoom } from '../components/three/gym/GymRoom'
+import { SceneCamera } from '../components/three/SceneCamera'
 import { SceneLights } from '../components/three/SceneLights'
+import { gymTheme } from '../config/gymTheme'
+import { projectStations } from '../data/projectStations'
 
 export function GymShowcaseScene() {
   return (
     <>
-      <color attach="background" args={['#05070b']} />
-      <PerspectiveCamera
-        makeDefault
-        position={[5, 4.5, 7]}
-        fov={45}
-        near={0.1}
-        far={50}
-        onUpdate={(camera) => {
-          camera.lookAt(0, -0.2, 0)
-        }}
+      <color attach="background" args={[gymTheme.colors.background]} />
+      <fog
+        attach="fog"
+        args={[
+          gymTheme.colors.fog,
+          gymTheme.render.fogNear,
+          gymTheme.render.fogFar,
+        ]}
       />
+      <SceneCamera />
       <SceneLights />
-      <SceneFloor />
-      <DebugCube />
+      <GymRoom />
+      {projectStations.map((station) => (
+        <ProjectStation key={station.id} station={station} />
+      ))}
     </>
   )
 }

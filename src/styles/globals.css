@@ -1,6 +1,6 @@
 :root {
   color: #dfe5f0;
-  background-color: #05070b;
+  background-color: #040608;
   font-family: 'Aptos', 'Segoe UI', sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -25,7 +25,7 @@ body {
   margin: 0;
   min-height: 100svh;
   background:
-    radial-gradient(circle at top, #151b27 0%, #05070b 48%, #030406 100%);
+    radial-gradient(circle at top, #1b2330 0%, #06080c 46%, #030406 100%);
 }
 
 body,

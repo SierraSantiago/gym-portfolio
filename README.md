@@ -39,18 +39,28 @@ src/
 
 ## Current Status
 
-The repository is currently in Phase 0. It includes:
+The repository is currently in Phase 1.5. It includes:
 
-- a fullscreen React Three Fiber canvas;
-- a minimal validation scene with a perspective camera, ambient light, directional light, a temporary floor, and a cube;
-- an HTML overlay separated from the 3D layer;
-- a small repository-specific `AGENTS.md`;
-- documentation aligned with the current architecture and scope.
+- a fullscreen React Three Fiber canvas with ACESFilmic tone mapping, controlled DPR, and soft shadows;
+- an expanded greybox gym of roughly `20 x 14 x 5.2` units, prepared for future third-person navigation;
+- differentiated cardio, strength, functional, circulation, and future-project zones;
+- visible ceiling fixtures, revised lighting, structural columns, mirrors, benches, a plate tree, mats, and simple functional props;
+- three primitive-based machines connected to typed project data:
+  - `CareerPulse` as a treadmill in the cardio zone;
+  - `Risk Analysis AI` as a dumbbell rack in the strength zone;
+  - `Automation Pipeline` as a cable machine in the functional zone;
+- a temporary inspection camera with limits chosen to avoid cenital views and floor clipping;
+- an HTML overlay separated from the 3D layer and kept visually lighter over the canvas.
+
+## Greybox Notes
+
+- The environment still uses only primitive geometry and simple Three.js materials.
+- This phase prioritizes readability, spatial composition, circulation, and lighting over realism.
+- The layout intentionally leaves empty room for future project stations.
 
 ## Next Phases
 
-- Replace placeholder geometry with a gym-inspired blockout scene.
-- Introduce content sections, navigation, and responsive layout behavior.
-- Add real portfolio data and state handling where needed.
-- Evaluate interaction patterns, camera behavior, and selective motion.
-- Add optimized assets only when the scene direction is stable.
+- Implement the player layer with movement and collisions.
+- Introduce character-scale traversal and camera behavior beyond temporary orbit inspection.
+- Replace selected primitives with more refined gym assets once the layout is stable.
+- Add richer project interactions only after the environment and traversal feel correct.
