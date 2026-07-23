@@ -11,7 +11,7 @@
 .panel {
   position: relative;
   display: grid;
-  gap: 10px;
+  gap: 0;
   max-width: 390px;
   padding: 8px 8px 6px;
 }
@@ -32,21 +32,6 @@
   filter: blur(8px);
 }
 
-.status {
-  width: fit-content;
-  padding: 8px 12px;
-  border: 1px solid rgba(249, 115, 22, 0.28);
-  border-radius: 999px;
-  background: rgba(12, 16, 24, 0.64);
-  color: #f7a66d;
-  font-family: 'Consolas', 'IBM Plex Mono', 'Courier New', monospace;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  backdrop-filter: blur(10px);
-}
-
 .title {
   margin: 0;
   color: #f5f7fb;
@@ -59,25 +44,15 @@
   text-shadow: 0 10px 32px rgba(0, 0, 0, 0.34);
 }
 
-.subtitle {
-  margin: 0;
-  max-width: 22rem;
-  color: #b5bfce;
-  font-size: clamp(0.92rem, 1.6vw, 1.08rem);
-  line-height: 1.48;
-  text-shadow: 0 8px 24px rgba(0, 0, 0, 0.26);
-}
 
-.hint {
-  margin: 2px 0 0;
-  width: fit-content;
-  padding: 6px 9px;
-  border-radius: 999px;
-  background: rgba(11, 16, 24, 0.36);
-  color: #8e9aad;
-  font-size: 0.74rem;
-  letter-spacing: 0.03em;
-  backdrop-filter: blur(8px);
+.controls {
+  margin: 14px 0 0;
+  color: rgba(245, 247, 251, 0.72);
+  font-family: 'Bahnschrift', 'Aptos', 'Segoe UI', sans-serif;
+  font-size: clamp(0.72rem, 1.2vw, 0.88rem);
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  text-shadow: 0 5px 18px rgba(0, 0, 0, 0.55);
 }
 
 @media (max-width: 1180px) {
@@ -98,7 +73,7 @@
 
   .panel {
     max-width: 100%;
-    gap: 8px;
+    gap: 0;
     padding: 4px 2px 2px;
   }
 

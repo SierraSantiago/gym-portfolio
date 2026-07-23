@@ -178,6 +178,11 @@
 }
 
 @media (max-width: 660px) {
+  .prompt {
+    bottom: 18px;
+    padding: 9px 12px;
+  }
+
   .backdrop {
     padding: 12px;
   }

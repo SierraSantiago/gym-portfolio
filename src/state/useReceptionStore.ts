@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import type { Vector3Tuple } from '../types/gymAsset'
 import type { ReceptionTopicId } from '../data/receptionDialog'
+import { entrySpawnPosition } from '../data/gymScene'
 
 interface ReceptionState {
   playerPosition: Vector3Tuple
@@ -16,9 +17,9 @@ interface ReceptionState {
 }
 
 export const useReceptionStore = create<ReceptionState>((set) => ({
-  // This matches the planned player spawn near the entrance. The future player
-  // controller should call setPlayerPosition every frame or whenever it moves.
-  playerPosition: [0, 0, 5.2],
+  // Planned player spawn on the entry walkway so moving forward leads to reception.
+  // The future player controller should call setPlayerPosition every frame or when it moves.
+  playerPosition: entrySpawnPosition,
   isNearReception: false,
   isDialogOpen: false,
   selectedTopic: null,

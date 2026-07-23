@@ -15,11 +15,11 @@ export interface CameraViewConfig {
 }
 
 const wideCamera: CameraViewConfig = {
-  position: [12.8, 5.4, 15.9],
-  target: [0.2, 1.6, -1.55],
-  fov: 44,
-  minDistance: 12.5,
-  maxDistance: 20.5,
+  position: [15.4, 6.3, 20.6],
+  target: [0.15, 1.58, -2.4],
+  fov: 50,
+  minDistance: 15.1,
+  maxDistance: 26.2,
   minPolarAngle: 1.0,
   maxPolarAngle: 1.36,
   minAzimuthAngle: -0.78,
@@ -29,11 +29,11 @@ const wideCamera: CameraViewConfig = {
 }
 
 const laptopCamera: CameraViewConfig = {
-  position: [11.8, 4.95, 14.8],
-  target: [0.2, 1.56, -1.4],
-  fov: 46,
-  minDistance: 11.5,
-  maxDistance: 18.8,
+  position: [14.1, 5.8, 19.1],
+  target: [0.15, 1.54, -2.2],
+  fov: 51,
+  minDistance: 14.1,
+  maxDistance: 24.2,
   minPolarAngle: 1.02,
   maxPolarAngle: 1.38,
   minAzimuthAngle: -0.74,
@@ -43,11 +43,11 @@ const laptopCamera: CameraViewConfig = {
 }
 
 const compactCamera: CameraViewConfig = {
-  position: [12.6, 5.1, 16.8],
-  target: [0.15, 1.48, -1.18],
-  fov: 48,
-  minDistance: 12,
-  maxDistance: 19.6,
+  position: [14.3, 5.55, 19.45],
+  target: [0.15, 1.48, -1.95],
+  fov: 52,
+  minDistance: 13.9,
+  maxDistance: 24,
   minPolarAngle: 1.04,
   maxPolarAngle: 1.4,
   minAzimuthAngle: -0.72,

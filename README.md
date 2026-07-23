@@ -100,17 +100,38 @@ Asset provenance and license placeholders are tracked in [docs/ASSET_LICENSES.md
 
 ## Current Limitations
 
-- There is still no player character, WASD movement, third-person camera, or collisions.
+- The first player controller is implemented with WASD movement, running, third-person camera control, and simplified collision boxes.
 - `gym-equipment.glb` still does not expose the "two plates plus mat" structure described in the planning notes; the scene continues to reuse verified named nodes from the actual hierarchy instead.
 - The current decorative props are stylized low-poly geometry; future external assets still require source and license verification.
 - Final interactive project panels and proximity behavior are intentionally deferred.
 
 ## Next Phase
 
-The next phase should add player movement, simplified runtime collisions, proximity-based project interactions, and responsive third-person camera behavior. Additional external decorative assets should only be introduced after their licenses are verified.
+The next phase should connect proximity-based interactions to each project machine, refine collision boxes after visual playtesting, and convert the FBX characters to optimized GLB assets. Additional external decorative assets should only be introduced after their licenses are verified.
 
 ## Reception NPC
 
 The entrance includes a low-poly receptionist and an English dialogue system.
 See `docs/RECEPTION_SYSTEM.md` for the interaction flow and the one-line hook
 needed to connect the future player controller.
+
+
+## Player Controller
+
+The project now includes a playable Mixamo character:
+
+- `WASD`: move relative to the third-person camera;
+- `Shift`: run;
+- drag the mouse over the 3D canvas: orbit the camera;
+- mouse wheel: adjust camera distance;
+- `E`: interact with Maya when the reception prompt appears;
+- `Esc`: close the reception dialogue.
+
+The player uses `Idle`, `StartWalking`, `Walking`, `Running`, and `Turning`
+clips from `public/models/characters/player`. Movement clips are normalized to
+in-place motion at runtime. The controller updates the reception store with the
+real player position, so the interaction prompt is no longer simulated.
+
+Simplified collisions currently cover the gym perimeter, reception desk, the
+three project stations, dense free-weight rows, and side storage. They are
+intentionally simple boxes and should be tuned after playtesting.

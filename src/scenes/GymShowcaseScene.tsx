@@ -3,6 +3,7 @@ import { GymRoom } from '../components/three/gym/GymRoom'
 import { SceneCamera } from '../components/three/SceneCamera'
 import { SceneLights } from '../components/three/SceneLights'
 import { ReceptionArea } from '../components/three/reception/ReceptionArea'
+import { PlayerCharacter } from '../components/three/player/PlayerCharacter'
 import { gymTheme } from '../config/gymTheme'
 import { projectStations } from '../data/projectStations'
 
@@ -22,6 +23,7 @@ export function GymShowcaseScene() {
       <SceneLights />
       <GymRoom />
       <ReceptionArea />
+      <PlayerCharacter />
       {projectStations.map((station) => (
         <ProjectStation key={station.id} station={station} />
       ))}

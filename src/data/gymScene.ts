@@ -71,6 +71,12 @@ export interface SecondaryModelConfig {
   scale?: ModelScale
 }
 
+export interface EntryWalkwayConfig {
+  id: string
+  position: Vector3Tuple
+  size: Vector3Tuple
+}
+
 export interface GymEquipmentPlacement {
   id: string
   nodeName:
@@ -103,6 +109,8 @@ export const gymColumns: Array<BoxLayout> = [
     size: [0.22, 4.3, 0.24],
   },
 ]
+
+export const entrySpawnPosition: Vector3Tuple = [0, 0, 6.0]
 
 export const floorZones: FloorZone[] = [
   {
@@ -334,6 +342,19 @@ export const rubberFloorOverlays: Array<BoxLayout> = [
     id: 'overlay-right-zone',
     position: [7.02, 0.018, 1.35],
     size: [4.35, 0.016, 4.55],
+  },
+]
+
+export const entryWalkwaySegments: EntryWalkwayConfig[] = [
+  {
+    id: 'entry-runway',
+    position: [0, 0.018, 5.48],
+    size: [3.18, 0.018, 3.08],
+  },
+  {
+    id: 'entry-landing',
+    position: [0, 0.018, 3.9],
+    size: [3.64, 0.018, 0.92],
   },
 ]
 

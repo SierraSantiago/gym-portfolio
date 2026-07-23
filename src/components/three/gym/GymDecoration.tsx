@@ -1,5 +1,6 @@
 import { gymTheme } from '../../../config/gymTheme'
 import {
+  entryWalkwaySegments,
   exerciseMats,
   functionalBoxes,
   gymEquipmentPlacements,
@@ -13,6 +14,28 @@ import { GymModel } from '../models/GymModel'
 export function GymDecoration() {
   return (
     <group>
+      {entryWalkwaySegments.map((segment) => (
+        <group key={segment.id} position={segment.position}>
+          <mesh receiveShadow>
+            <boxGeometry args={segment.size} />
+            <meshStandardMaterial
+              color={gymTheme.colors.entryWalkway}
+              roughness={0.9}
+              metalness={0.03}
+            />
+          </mesh>
+
+          <mesh position={[0, segment.size[1] * 0.52, 0]} receiveShadow>
+            <boxGeometry args={[segment.size[0] - 0.18, 0.002, segment.size[2] - 0.18]} />
+            <meshStandardMaterial
+              color={gymTheme.colors.entryWalkwayInset}
+              roughness={0.96}
+              metalness={0.02}
+            />
+          </mesh>
+        </group>
+      ))}
+
       {rubberFloorOverlays.map((overlay) => (
         <group key={overlay.id} position={overlay.position}>
           <mesh receiveShadow>

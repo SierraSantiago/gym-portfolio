@@ -76,7 +76,7 @@ export function ReceptionUI() {
                 aria-label="Close conversation"
                 onClick={closeDialog}
               >
-                ×
+                X
               </button>
             </header>
 

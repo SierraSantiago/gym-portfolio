@@ -1,65 +1,124 @@
-import {
-  extend,
-  useFrame,
-  useThree,
-  type ThreeElement,
-} from '@react-three/fiber'
-import { useEffect, useRef } from 'react'
-import { PerspectiveCamera as ThreePerspectiveCamera } from 'three'
-import { OrbitControls as ThreeOrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { getCameraViewConfig } from '../../config/gymCamera'
+import { useFrame, useThree } from '@react-three/fiber'
+import { useEffect, useMemo, useRef } from 'react'
+import { MathUtils, PerspectiveCamera, Vector3 } from 'three'
+import { usePlayerStore } from '../../state/usePlayerStore'
+import { useReceptionStore } from '../../state/useReceptionStore'
 
-extend({ OrbitControls: ThreeOrbitControls })
-
-declare module '@react-three/fiber' {
-  interface ThreeElements {
-    orbitControls: ThreeElement<typeof ThreeOrbitControls>
-  }
-}
+const MIN_PITCH = 0.16
+const MAX_PITCH = 0.78
+const MIN_DISTANCE = 3.6
+const MAX_DISTANCE = 7.5
 
 export function SceneCamera() {
-  const controlsRef = useRef<ThreeOrbitControls | null>(null)
-  const { camera, gl, size } = useThree()
-  const cameraConfig = getCameraViewConfig(size.width)
+  const { camera, gl } = useThree()
+  const isDraggingRef = useRef(false)
+  const previousPointerRef = useRef({ x: 0, y: 0 })
+  const desiredPosition = useMemo(() => new Vector3(), [])
+  const target = useMemo(() => new Vector3(), [])
+  const isDialogOpen = useReceptionStore((state) => state.isDialogOpen)
 
   useEffect(() => {
-    if (!(camera instanceof ThreePerspectiveCamera)) {
+    if (!(camera instanceof PerspectiveCamera)) {
       return
     }
 
-    camera.position.set(...cameraConfig.position)
-    camera.fov = cameraConfig.fov
-    camera.near = 0.1
-    camera.far = 72
-    camera.lookAt(...cameraConfig.target)
+    camera.fov = 46
+    camera.near = 0.08
+    camera.far = 100
     camera.updateProjectionMatrix()
+  }, [camera])
 
-    if (controlsRef.current) {
-      controlsRef.current.target.set(...cameraConfig.target)
-      controlsRef.current.update()
+  useEffect(() => {
+    const canvas = gl.domElement
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (event.button !== 0 || isDialogOpen) {
+        return
+      }
+
+      isDraggingRef.current = true
+      previousPointerRef.current = { x: event.clientX, y: event.clientY }
+      canvas.setPointerCapture(event.pointerId)
+      canvas.style.cursor = 'grabbing'
     }
-  }, [camera, cameraConfig])
 
-  useFrame(() => {
-    controlsRef.current?.update()
+    const handlePointerMove = (event: PointerEvent) => {
+      if (!isDraggingRef.current || isDialogOpen) {
+        return
+      }
+
+      const deltaX = event.clientX - previousPointerRef.current.x
+      const deltaY = event.clientY - previousPointerRef.current.y
+      previousPointerRef.current = { x: event.clientX, y: event.clientY }
+
+      const state = usePlayerStore.getState()
+      state.setCameraOrbit(
+        state.cameraYaw - deltaX * 0.006,
+        MathUtils.clamp(state.cameraPitch + deltaY * 0.0045, MIN_PITCH, MAX_PITCH),
+      )
+    }
+
+    const stopDragging = (event: PointerEvent) => {
+      if (!isDraggingRef.current) {
+        return
+      }
+
+      isDraggingRef.current = false
+      if (canvas.hasPointerCapture(event.pointerId)) {
+        canvas.releasePointerCapture(event.pointerId)
+      }
+      canvas.style.cursor = 'grab'
+    }
+
+    const handleWheel = (event: WheelEvent) => {
+      if (isDialogOpen) {
+        return
+      }
+
+      event.preventDefault()
+      const state = usePlayerStore.getState()
+      state.setCameraDistance(
+        MathUtils.clamp(
+          state.cameraDistance + Math.sign(event.deltaY) * 0.45,
+          MIN_DISTANCE,
+          MAX_DISTANCE,
+        ),
+      )
+    }
+
+    canvas.style.cursor = isDialogOpen ? 'default' : 'grab'
+    canvas.addEventListener('pointerdown', handlePointerDown)
+    canvas.addEventListener('pointermove', handlePointerMove)
+    canvas.addEventListener('pointerup', stopDragging)
+    canvas.addEventListener('pointercancel', stopDragging)
+    canvas.addEventListener('wheel', handleWheel, { passive: false })
+
+    return () => {
+      canvas.style.cursor = 'default'
+      canvas.removeEventListener('pointerdown', handlePointerDown)
+      canvas.removeEventListener('pointermove', handlePointerMove)
+      canvas.removeEventListener('pointerup', stopDragging)
+      canvas.removeEventListener('pointercancel', stopDragging)
+      canvas.removeEventListener('wheel', handleWheel)
+    }
+  }, [gl, isDialogOpen])
+
+  useFrame((_, delta) => {
+    const state = usePlayerStore.getState()
+    const [playerX, playerY, playerZ] = state.position
+    const horizontalDistance = Math.cos(state.cameraPitch) * state.cameraDistance
+
+    target.set(playerX, playerY + 1.3, playerZ)
+    desiredPosition.set(
+      playerX + Math.sin(state.cameraYaw) * horizontalDistance,
+      playerY + 0.55 + Math.sin(state.cameraPitch) * state.cameraDistance,
+      playerZ + Math.cos(state.cameraYaw) * horizontalDistance,
+    )
+
+    const smoothing = 1 - Math.exp(-7.5 * Math.min(delta, 0.05))
+    camera.position.lerp(desiredPosition, smoothing)
+    camera.lookAt(target)
   })
 
-  return (
-    /* Temporary inspection controls until the player camera replaces orbit view. */
-    <orbitControls
-      ref={controlsRef}
-      args={[camera, gl.domElement]}
-      enableDamping
-      dampingFactor={0.075}
-      enablePan={false}
-      minDistance={cameraConfig.minDistance}
-      maxDistance={cameraConfig.maxDistance}
-      minPolarAngle={cameraConfig.minPolarAngle}
-      maxPolarAngle={cameraConfig.maxPolarAngle}
-      minAzimuthAngle={cameraConfig.minAzimuthAngle}
-      maxAzimuthAngle={cameraConfig.maxAzimuthAngle}
-      rotateSpeed={cameraConfig.rotateSpeed}
-      zoomSpeed={cameraConfig.zoomSpeed}
-    />
-  )
+  return null
 }
