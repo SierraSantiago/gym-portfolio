@@ -4,6 +4,7 @@ export type GymModelAssetId =
   | 'leg-press'
   | 'arc-bench'
   | 'gym-equipment'
+  | 'gym-environment'
 
 export type Vector3Tuple = [number, number, number]
 

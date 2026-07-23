@@ -2,6 +2,15 @@
 
 This repository currently stores the following gym models in `public/models/gym/`.
 
+## gym-environment.glb
+
+- Asset or pack: Original project environment
+- Author: Santiago Sierra portfolio project
+- Source: Generated specifically for this repository
+- License: Project-owned; no external asset dependency
+- Derived files: `public/models/gym/gym-environment.glb`
+- Modifications: Editable Blender preparation workflow is documented in `tools/blender/`.
+
 ## treadmill.glb
 
 - Asset or pack: Pending verification

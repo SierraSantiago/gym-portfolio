@@ -7,14 +7,14 @@ export function SceneLights() {
       <hemisphereLight
         color={gymTheme.colors.hemisphereSky}
         groundColor={gymTheme.colors.hemisphereGround}
-        intensity={0.84}
+        intensity={0.64}
       />
-      <ambientLight color={gymTheme.colors.ambientLight} intensity={0.2} />
+      <ambientLight color={gymTheme.colors.ambientLight} intensity={0.12} />
       <directionalLight
         castShadow
         color={gymTheme.colors.keyLight}
-        intensity={2.12}
-        position={[8.6, 11.2, 7.4]}
+        intensity={1.9}
+        position={[9.4, 11.6, 6.8]}
         shadow-bias={-0.00018}
         shadow-normalBias={0.02}
         shadow-camera-bottom={-12}

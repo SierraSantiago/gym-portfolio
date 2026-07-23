@@ -41,6 +41,14 @@ export const gymModelAssets: Record<GymModelAssetId, GymModelAsset> = {
     castShadow: true,
     receiveShadow: true,
   },
+  'gym-environment': {
+    id: 'gym-environment',
+    url: '/models/gym/gym-environment.glb',
+    defaultScale: 1,
+    defaultRotation: [0, 0, 0],
+    castShadow: true,
+    receiveShadow: true,
+  },
 }
 
 export const preloadGymAssetIds: GymModelAssetId[] = [
@@ -49,4 +57,5 @@ export const preloadGymAssetIds: GymModelAssetId[] = [
   'leg-press',
   'arc-bench',
   'gym-equipment',
+  'gym-environment',
 ]
