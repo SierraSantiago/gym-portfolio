@@ -7,13 +7,13 @@ export function SceneLights() {
       <hemisphereLight
         color={gymTheme.colors.hemisphereSky}
         groundColor={gymTheme.colors.hemisphereGround}
-        intensity={0.64}
+        intensity={0.72}
       />
-      <ambientLight color={gymTheme.colors.ambientLight} intensity={0.12} />
+      <ambientLight color={gymTheme.colors.ambientLight} intensity={0.16} />
       <directionalLight
         castShadow
         color={gymTheme.colors.keyLight}
-        intensity={1.9}
+        intensity={2.05}
         position={[9.4, 11.6, 6.8]}
         shadow-bias={-0.00018}
         shadow-normalBias={0.02}
@@ -22,8 +22,8 @@ export function SceneLights() {
         shadow-camera-left={-14}
         shadow-camera-right={14}
         shadow-camera-top={14}
-        shadow-mapSize-height={1536}
-        shadow-mapSize-width={1536}
+        shadow-mapSize-height={768}
+        shadow-mapSize-width={768}
       />
       {zoneAccentLights.map((light) => (
         <pointLight

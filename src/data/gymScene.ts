@@ -63,6 +63,12 @@ export interface LedStripConfig {
   emissiveIntensity: number
 }
 
+export interface FrontFacadePanelConfig {
+  id: string
+  position: Vector3Tuple
+  size: Vector3Tuple
+}
+
 export interface SecondaryModelConfig {
   id: string
   assetId: Extract<GymModelAssetId, 'arc-bench' | 'treadmill'>
@@ -144,10 +150,11 @@ export const backMirrorPanels: Array<BoxLayout> = [
 ]
 
 export const ceilingLightFixtures: CeilingLightConfig[] = [
-  { id: 'ceiling-light-cardio-front', position: [-6.75, 4.62, 2.15], size: [1.95, 0.22], drop: 0.42, intensity: 3.4 },
-  { id: 'ceiling-light-cardio-rear', position: [-6.2, 4.72, -1.15], size: [1.8, 0.22], drop: 0.36 },
-  { id: 'ceiling-light-leg-press', position: [6.1, 4.7, -3.1], size: [2.05, 0.22], drop: 0.4, intensity: 3.5 },
-  { id: 'ceiling-light-functional', position: [6.85, 4.7, 1.75], size: [1.9, 0.22], drop: 0.38 },
+  { id: 'ceiling-light-entry', position: [0, 4.66, 5.15], size: [2.2, 0.22], drop: 0.34, intensity: 3.1 },
+  { id: 'ceiling-light-cardio-front', position: [-6.75, 4.62, 2.15], size: [1.95, 0.22], drop: 0.42, intensity: 3.55 },
+  { id: 'ceiling-light-cardio-rear', position: [-6.2, 4.72, -1.15], size: [1.8, 0.22], drop: 0.36, intensity: 3.2 },
+  { id: 'ceiling-light-leg-press', position: [6.1, 4.7, -3.1], size: [2.05, 0.22], drop: 0.4, intensity: 3.65 },
+  { id: 'ceiling-light-functional', position: [6.85, 4.7, 1.75], size: [1.9, 0.22], drop: 0.38, intensity: 3.2 },
 ]
 
 export const zoneAccentLights: ZoneLightConfig[] = [
@@ -185,6 +192,20 @@ export const zoneAccentLights: ZoneLightConfig[] = [
     intensity: 1.95,
     distance: 6.8,
     colorToken: 'accentLight',
+  },
+  {
+    id: 'zone-light-reception',
+    position: [0, 3.15, 4.45],
+    intensity: 2.15,
+    distance: 6.2,
+    colorToken: 'lightPanel',
+  },
+  {
+    id: 'zone-light-entry',
+    position: [0, 3.2, 6.15],
+    intensity: 1.85,
+    distance: 5.6,
+    colorToken: 'fillLight',
   },
 ]
 
@@ -310,15 +331,18 @@ export const gymEquipmentPlacements: GymEquipmentPlacement[] = [
 ]
 
 export const wallCoverPanels: Array<BoxLayout> = [
+]
+
+export const sidePhotoWallPanels: Array<BoxLayout> = [
   {
-    id: 'cover-left-wall-decor',
-    position: [-9.68, 1.72, 1.18],
-    size: [0.16, 2.5, 4.9],
+    id: 'photo-wall-left',
+    position: [-9.64, 2.2, -0.1],
+    size: [0.08, 4.1, 11.2],
   },
   {
-    id: 'cover-right-wall-decor',
-    position: [9.68, 1.72, 1.22],
-    size: [0.16, 2.5, 5.1],
+    id: 'photo-wall-right',
+    position: [9.64, 2.2, -0.1],
+    size: [0.08, 4.1, 11.2],
   },
 ]
 
@@ -358,22 +382,63 @@ export const entryWalkwaySegments: EntryWalkwayConfig[] = [
   },
 ]
 
-export const zoneSigns: ZoneSignConfig[] = [
+export const frontFacadeGlassPanels: FrontFacadePanelConfig[] = [
   {
-    id: 'zone-sign-cardio',
-    title: 'CARDIO',
-    position: [-9.81, 1.78, 0.98],
-    rotation: [0, Math.PI / 2, 0],
-    size: [1.34, 0.32],
+    id: 'front-glass-left',
+    position: [-5.67, 1.72, 6.82],
+    size: [7.94, 3.44, 0.08],
   },
   {
-    id: 'zone-sign-functional',
-    title: 'MACHINES',
-    position: [9.81, 1.78, 1.2],
-    rotation: [0, -Math.PI / 2, 0],
-    size: [1.72, 0.32],
+    id: 'front-glass-right',
+    position: [5.67, 1.72, 6.82],
+    size: [7.94, 3.44, 0.08],
+  },
+  {
+    id: 'front-glass-transom',
+    position: [0, 4.43, 6.82],
+    size: [19.12, 0.98, 0.08],
   },
 ]
+
+export const frontFacadeFrameSegments: FrontFacadePanelConfig[] = [
+  {
+    id: 'front-frame-left-outer',
+    position: [-9.58, 2.48, 6.82],
+    size: [0.16, 4.96, 0.12],
+  },
+  {
+    id: 'front-frame-right-outer',
+    position: [9.58, 2.48, 6.82],
+    size: [0.16, 4.96, 0.12],
+  },
+  {
+    id: 'front-frame-top',
+    position: [0, 5.0, 6.82],
+    size: [19.12, 0.16, 0.12],
+  },
+  {
+    id: 'front-frame-bottom',
+    position: [0, 0.14, 6.82],
+    size: [19.12, 0.18, 0.14],
+  },
+  {
+    id: 'front-frame-door-left',
+    position: [-1.76, 1.86, 6.82],
+    size: [0.12, 3.72, 0.12],
+  },
+  {
+    id: 'front-frame-door-right',
+    position: [1.76, 1.86, 6.82],
+    size: [0.12, 3.72, 0.12],
+  },
+  {
+    id: 'front-frame-door-top',
+    position: [0, 3.66, 6.82],
+    size: [3.64, 0.12, 0.12],
+  },
+]
+
+export const zoneSigns: ZoneSignConfig[] = []
 
 export const floorTileLines: Array<BoxLayout> = [
   { id: 'strength-line-v1', position: [-2.7, 0.0072, -4.05], size: [0.035, 0.002, 4.4] },
@@ -429,8 +494,6 @@ export const wallArchitecturalPanels: Array<WallPanelConfig> = [
   { id: 'back-panel-right', position: [7.7, 2.28, -6.76], size: [0.92, 4, 0.03], variant: 'deep' },
   { id: 'back-panel-center-top', position: [0, 4.12, -6.79], size: [6.96, 0.24, 0.02], variant: 'trim' },
   { id: 'back-panel-center-base', position: [0, 0.88, -6.79], size: [6.96, 0.22, 0.02], variant: 'warm' },
-  { id: 'left-wall-panel-main', position: [-9.83, 2.02, 0.9], size: [0.03, 2.18, 4.78], variant: 'mid' },
-  { id: 'right-wall-panel-main', position: [9.83, 2.02, 1.25], size: [0.03, 2.18, 5.08], variant: 'mid' },
 ]
 
 export const wallLedStrips: Array<LedStripConfig> = [
@@ -440,21 +503,5 @@ export const wallLedStrips: Array<LedStripConfig> = [
     size: [6.3, 0.018, 0.012],
     colorToken: 'marker',
     emissiveIntensity: 0.78,
-  },
-  {
-    id: 'left-wall-led',
-    position: [-9.82, 1.34, 0.98],
-    size: [0.012, 0.018, 1.26],
-    rotation: [0, Math.PI / 2, 0],
-    colorToken: 'lightPanel',
-    emissiveIntensity: 0.34,
-  },
-  {
-    id: 'right-wall-led',
-    position: [9.82, 1.34, 1.2],
-    size: [0.012, 0.018, 1.44],
-    rotation: [0, Math.PI / 2, 0],
-    colorToken: 'lightPanel',
-    emissiveIntensity: 0.34,
   },
 ]

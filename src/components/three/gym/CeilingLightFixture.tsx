@@ -37,20 +37,11 @@ export function CeilingLightFixture({ fixture }: CeilingLightFixtureProps) {
         <meshStandardMaterial
           color={gymTheme.colors.lightPanel}
           emissive={gymTheme.colors.lightGlow}
-          emissiveIntensity={1.08}
+          emissiveIntensity={1.18}
           roughness={gymTheme.materials.lightPanel.roughness}
           metalness={gymTheme.materials.lightPanel.metalness}
         />
       </mesh>
-      {fixture.intensity ? (
-        <pointLight
-          color={gymTheme.colors.lightPanel}
-          intensity={fixture.intensity}
-          position={[0, -0.38, 0]}
-          distance={7.8}
-          decay={2}
-        />
-      ) : null}
     </group>
   )
 }

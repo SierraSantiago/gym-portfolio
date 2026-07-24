@@ -23,6 +23,7 @@ The application continues to own:
 - project titles and future interaction states;
 - zone labels and the `BUILD YOUR CAREER` sign;
 - real-time lights, shadows, fog and camera controls;
+- the front glazed facade and entrance framing that closes the presentation side;
 - the secondary real equipment models currently placed by `GymDecoration`.
 
 This separation prevents the project stations from becoming difficult to select or animate after a Blender re-export.
@@ -33,7 +34,7 @@ This separation prevents the project stations from becoming difficult to select 
 - No central structural columns.
 - No floating decoration.
 - No intersecting floor overlays.
-- Open front edge for the presentation camera.
+- Front facade closed with a centered entrance aligned to the approach route.
 - Perimeter decoration that does not block the central circulation route.
 - Existing project-machine coordinates remain valid.
 

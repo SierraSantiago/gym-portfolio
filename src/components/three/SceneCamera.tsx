@@ -13,8 +13,11 @@ export function SceneCamera() {
   const { camera, gl } = useThree()
   const isDraggingRef = useRef(false)
   const previousPointerRef = useRef({ x: 0, y: 0 })
+  const initializedRef = useRef(false)
   const desiredPosition = useMemo(() => new Vector3(), [])
-  const target = useMemo(() => new Vector3(), [])
+  const desiredTarget = useMemo(() => new Vector3(), [])
+  const smoothedPosition = useMemo(() => new Vector3(), [])
+  const smoothedTarget = useMemo(() => new Vector3(), [])
   const isDialogOpen = useReceptionStore((state) => state.isDialogOpen)
 
   useEffect(() => {
@@ -108,16 +111,31 @@ export function SceneCamera() {
     const [playerX, playerY, playerZ] = state.position
     const horizontalDistance = Math.cos(state.cameraPitch) * state.cameraDistance
 
-    target.set(playerX, playerY + 1.3, playerZ)
+    desiredTarget.set(playerX, playerY + 1.3, playerZ)
     desiredPosition.set(
       playerX + Math.sin(state.cameraYaw) * horizontalDistance,
       playerY + 0.55 + Math.sin(state.cameraPitch) * state.cameraDistance,
       playerZ + Math.cos(state.cameraYaw) * horizontalDistance,
     )
 
-    const smoothing = 1 - Math.exp(-7.5 * Math.min(delta, 0.05))
-    camera.position.lerp(desiredPosition, smoothing)
-    camera.lookAt(target)
+    if (!initializedRef.current) {
+      smoothedPosition.copy(desiredPosition)
+      smoothedTarget.copy(desiredTarget)
+      camera.position.copy(desiredPosition)
+      camera.lookAt(desiredTarget)
+      initializedRef.current = true
+      return
+    }
+
+    const cappedDelta = Math.min(delta, 0.05)
+    const positionSmoothing = 1 - Math.exp(-9 * cappedDelta)
+    const targetSmoothing = 1 - Math.exp(-11 * cappedDelta)
+
+    smoothedPosition.lerp(desiredPosition, positionSmoothing)
+    smoothedTarget.lerp(desiredTarget, targetSmoothing)
+
+    camera.position.copy(smoothedPosition)
+    camera.lookAt(smoothedTarget)
   })
 
   return null
