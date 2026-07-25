@@ -44,8 +44,10 @@ The environment keeps the original 20 m × 14 m footprint and a 5.2 m wall heigh
 
 | Project | Position in Three.js |
 |---|---:|
-| CareerPulse | `[-6.75, 0, 0.35]` |
-| Risk Analysis AI | `[0.55, 0, -4.82]` |
-| Automation Pipeline | `[6.05, 0, -3.3]` |
+| CareerPulse | `[-6.55, 0.92, 2.45]` |
+| Bench Left Project | `[-4.7, 0.92, -3.2]` |
+| Risk Analysis AI | `[0.1, 0.92, -3.15]` |
+| Automation Pipeline | `[4.8, 0.92, -3.2]` |
+| Right Machines Project | `[7.05, 0.92, -0.45]` |
 
 Future player movement should use the colliders and markers generated in the editable Blender source rather than high-detail render meshes.

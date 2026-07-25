@@ -46,7 +46,7 @@ export const gymModelAssets: Record<GymModelAssetId, GymModelAsset> = {
     url: '/models/gym/gym-environment.glb',
     defaultScale: 1,
     defaultRotation: [0, 0, 0],
-    castShadow: true,
+    castShadow: false,
     receiveShadow: true,
   },
 }

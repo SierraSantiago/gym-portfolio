@@ -2,6 +2,7 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useMemo, useRef } from 'react'
 import { MathUtils, PerspectiveCamera, Vector3 } from 'three'
 import { usePlayerStore } from '../../state/usePlayerStore'
+import { useProjectStore } from '../../state/useProjectStore'
 import { useReceptionStore } from '../../state/useReceptionStore'
 
 const MIN_PITCH = 0.16
@@ -19,6 +20,7 @@ export function SceneCamera() {
   const smoothedPosition = useMemo(() => new Vector3(), [])
   const smoothedTarget = useMemo(() => new Vector3(), [])
   const isDialogOpen = useReceptionStore((state) => state.isDialogOpen)
+  const isProjectOpen = useProjectStore((state) => state.isProjectOpen)
 
   useEffect(() => {
     if (!(camera instanceof PerspectiveCamera)) {
@@ -35,7 +37,7 @@ export function SceneCamera() {
     const canvas = gl.domElement
 
     const handlePointerDown = (event: PointerEvent) => {
-      if (event.button !== 0 || isDialogOpen) {
+      if (event.button !== 0 || isDialogOpen || isProjectOpen) {
         return
       }
 
@@ -46,7 +48,7 @@ export function SceneCamera() {
     }
 
     const handlePointerMove = (event: PointerEvent) => {
-      if (!isDraggingRef.current || isDialogOpen) {
+      if (!isDraggingRef.current || isDialogOpen || isProjectOpen) {
         return
       }
 
@@ -74,7 +76,7 @@ export function SceneCamera() {
     }
 
     const handleWheel = (event: WheelEvent) => {
-      if (isDialogOpen) {
+      if (isDialogOpen || isProjectOpen) {
         return
       }
 
@@ -89,7 +91,7 @@ export function SceneCamera() {
       )
     }
 
-    canvas.style.cursor = isDialogOpen ? 'default' : 'grab'
+    canvas.style.cursor = isDialogOpen || isProjectOpen ? 'default' : 'grab'
     canvas.addEventListener('pointerdown', handlePointerDown)
     canvas.addEventListener('pointermove', handlePointerMove)
     canvas.addEventListener('pointerup', stopDragging)
@@ -104,7 +106,7 @@ export function SceneCamera() {
       canvas.removeEventListener('pointercancel', stopDragging)
       canvas.removeEventListener('wheel', handleWheel)
     }
-  }, [gl, isDialogOpen])
+  }, [gl, isDialogOpen, isProjectOpen])
 
   useFrame((_, delta) => {
     const state = usePlayerStore.getState()

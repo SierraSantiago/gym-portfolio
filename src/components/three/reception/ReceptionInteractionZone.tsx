@@ -19,7 +19,7 @@ export function ReceptionInteractionZone({
   useFrame(() => {
     const state = useReceptionStore.getState()
     currentPlayerPosition.set(...state.playerPosition)
-    const isNear = currentPlayerPosition.distanceTo(center) <= radius
+    const isNear = currentPlayerPosition.distanceToSquared(center) <= radius * radius
 
     if (isNear !== state.isNearReception) {
       state.setNearReception(isNear)

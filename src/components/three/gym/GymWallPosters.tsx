@@ -18,7 +18,7 @@ function GymWallPoster({ poster }: { poster: GymPosterConfig }) {
 
   return (
     <group position={poster.position} rotation={poster.rotation}>
-      <mesh position={[0, 0, -0.032]} castShadow receiveShadow>
+      <mesh position={[0, 0, -0.032]}>
         <boxGeometry args={[poster.size[0] + 0.16, poster.size[1] + 0.16, 0.05]} />
         <meshStandardMaterial
           color={gymTheme.colors.posterFrame}
@@ -27,12 +27,11 @@ function GymWallPoster({ poster }: { poster: GymPosterConfig }) {
         />
       </mesh>
 
-      <mesh position={[0, 0, -0.003]} receiveShadow>
+      <mesh position={[0, 0, -0.003]}>
         <planeGeometry args={poster.size} />
-        <meshStandardMaterial
+        <meshBasicMaterial
           map={texture}
-          roughness={0.86}
-          metalness={0.02}
+          toneMapped={false}
         />
       </mesh>
     </group>

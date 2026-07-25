@@ -17,6 +17,7 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js'
 import { clone } from 'three/examples/jsm/utils/SkeletonUtils.js'
 import { entrySpawnPosition } from '../../../data/gymScene'
 import { usePlayerStore } from '../../../state/usePlayerStore'
+import { useProjectStore } from '../../../state/useProjectStore'
 import { useReceptionStore } from '../../../state/useReceptionStore'
 
 const playerAssets = {
@@ -198,10 +199,13 @@ export function PlayerCharacter() {
   const displacement = useMemo(() => new Vector3(), [])
   const forward = useMemo(() => new Vector3(), [])
   const right = useMemo(() => new Vector3(), [])
+  const lastSyncedPosition = useMemo(() => new Vector3(...entrySpawnPosition), [])
+  const lastSyncedRotationRef = useRef(Math.PI)
   // Bind the mixer directly to the cloned character, so actions exist before paint.
   const { actions, mixer } = useAnimations(clips, character)
 
   const isDialogOpen = useReceptionStore((state) => state.isDialogOpen)
+  const isProjectOpen = useProjectStore((state) => state.isProjectOpen)
 
   const getAction = (name: AnimationName): AnimationAction | undefined =>
     actions[name] ?? undefined
@@ -295,7 +299,7 @@ export function PlayerCharacter() {
     const keys = keysRef.current
     const forwardInput = (keys.has('KeyW') ? 1 : 0) - (keys.has('KeyS') ? 1 : 0)
     const rightInput = (keys.has('KeyD') ? 1 : 0) - (keys.has('KeyA') ? 1 : 0)
-    const hasInput = !isDialogOpen && (forwardInput !== 0 || rightInput !== 0)
+    const hasInput = !isDialogOpen && !isProjectOpen && (forwardInput !== 0 || rightInput !== 0)
     const isRunning =
       hasInput && (keys.has('ShiftLeft') || keys.has('ShiftRight'))
 
@@ -321,13 +325,26 @@ export function PlayerCharacter() {
       playLoop(animationNames.idle)
     }
 
-    const positionTuple: [number, number, number] = [
-      root.position.x,
-      root.position.y,
-      root.position.z,
-    ]
-    usePlayerStore.getState().setTransform(positionTuple, root.rotation.y)
-    useReceptionStore.getState().setPlayerPosition(positionTuple)
+    const positionChanged =
+      lastSyncedPosition.distanceToSquared(root.position) > 0.000001
+    const rotationChanged = Math.abs(lastSyncedRotationRef.current - root.rotation.y) > 0.0005
+
+    if (positionChanged || rotationChanged) {
+      const positionTuple: [number, number, number] = [
+        root.position.x,
+        root.position.y,
+        root.position.z,
+      ]
+
+      usePlayerStore.getState().setTransform(positionTuple, root.rotation.y)
+
+      if (positionChanged) {
+        useReceptionStore.getState().setPlayerPosition(positionTuple)
+        lastSyncedPosition.copy(root.position)
+      }
+
+      lastSyncedRotationRef.current = root.rotation.y
+    }
   })
 
   return (

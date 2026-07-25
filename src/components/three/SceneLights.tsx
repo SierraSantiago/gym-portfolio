@@ -22,8 +22,8 @@ export function SceneLights() {
         shadow-camera-left={-14}
         shadow-camera-right={14}
         shadow-camera-top={14}
-        shadow-mapSize-height={768}
-        shadow-mapSize-width={768}
+        shadow-mapSize-height={512}
+        shadow-mapSize-width={512}
       />
       {zoneAccentLights.map((light) => (
         <pointLight

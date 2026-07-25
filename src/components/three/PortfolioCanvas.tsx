@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import {
   ACESFilmicToneMapping,
-  PCFSoftShadowMap,
+  PCFShadowMap,
   SRGBColorSpace,
 } from 'three'
 import { gymTheme } from '../../config/gymTheme'
@@ -27,7 +27,7 @@ export function PortfolioCanvas() {
           gl.toneMapping = ACESFilmicToneMapping
           gl.toneMappingExposure = gymTheme.render.exposure
           gl.shadowMap.enabled = true
-          gl.shadowMap.type = PCFSoftShadowMap
+          gl.shadowMap.type = PCFShadowMap
           gl.setClearColor(gymTheme.colors.background)
         }}
       >

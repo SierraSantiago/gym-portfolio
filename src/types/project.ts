@@ -1,11 +1,23 @@
-import type { GymModelAssetId, ModelScale, Vector3Tuple } from './gymAsset'
+import type { Vector3Tuple } from './gymAsset'
+
+export interface ProjectLink {
+  label: string
+  url: string
+}
 
 export interface ProjectStationData {
   id: string
   title: string
-  assetId: GymModelAssetId
+  kind?: 'project' | 'social'
+  tourOrder?: number
   position: Vector3Tuple
-  rotation: Vector3Tuple
-  labelOffset: Vector3Tuple
-  scale?: ModelScale
+  interactionRadius: number
+  status: string
+  summary: string
+  description: string
+  features: string[]
+  stack: string[]
+  links?: ProjectLink[]
+  githubUrl?: string
+  liveUrl?: string
 }

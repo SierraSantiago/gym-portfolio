@@ -4,6 +4,7 @@ import { GymFrontFacade } from './GymFrontFacade'
 import { GymMirrors } from './GymMirrors'
 import { GymSidePhotoWalls } from './GymSidePhotoWalls'
 import { GymSign } from './GymSign'
+import { GymTourRoute } from './GymTourRoute'
 import { GymWallPosters } from './GymWallPosters'
 import { GymZoneSigns } from './GymZoneSigns'
 import { HangingLights } from './HangingLights'
@@ -16,6 +17,7 @@ export function GymRoom() {
       <GymFrontFacade />
       <HangingLights />
       <GymMirrors />
+      <GymTourRoute />
       <GymSidePhotoWalls />
       <GymWallPosters />
       <GymZoneSigns />
