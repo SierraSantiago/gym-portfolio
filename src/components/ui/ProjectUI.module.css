@@ -223,9 +223,14 @@
 }
 
 @media (max-width: 860px) {
+  .backdrop {
+    padding: 12px;
+    align-items: stretch;
+  }
+
   .panel {
-    width: calc(100vw - 22px);
-    max-height: calc(100vh - 22px);
+    width: calc(100vw - 24px);
+    max-height: calc(100svh - 24px);
     border-radius: 22px;
   }
 
@@ -243,5 +248,185 @@
   .footer {
     align-items: flex-start;
     flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .backdrop {
+    padding: 0;
+    place-items: stretch;
+    background: rgba(0, 0, 0, 0.88);
+  }
+
+  .panel {
+    width: 100vw;
+    max-height: 100svh;
+    min-height: 100svh;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .header {
+    align-items: flex-start;
+    padding: max(16px, env(safe-area-inset-top)) 16px 14px;
+  }
+
+  .title {
+    font-size: clamp(1.45rem, 8vw, 1.95rem);
+    line-height: 1;
+  }
+
+  .summary {
+    margin-top: 10px;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  .close {
+    flex: 0 0 38px;
+  }
+
+  .body {
+    padding: 18px 16px;
+  }
+
+  .sectionTitle {
+    font-size: 0.82rem;
+  }
+
+  .description,
+  .list {
+    font-size: 0.92rem;
+    line-height: 1.62;
+  }
+
+  .card {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .tag {
+    font-size: 0.78rem;
+  }
+
+  .footer {
+    padding: 14px 16px calc(14px + env(safe-area-inset-bottom));
+  }
+
+  .linkRow {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .linkButton {
+    text-align: center;
+  }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .backdrop {
+    padding: 8px;
+    place-items: center;
+    background: rgba(0, 0, 0, 0.86);
+  }
+
+  .panel {
+    width: min(980px, calc(100vw - 16px));
+    min-height: auto;
+    max-height: calc(100svh - 16px);
+    border-radius: 18px;
+  }
+
+  .header {
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px 10px;
+  }
+
+  .eyebrow {
+    margin-bottom: 6px;
+    font-size: 0.65rem;
+  }
+
+  .title {
+    font-size: clamp(1.25rem, 3vw, 1.7rem);
+  }
+
+  .summary {
+    margin-top: 8px;
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
+  .close {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+  }
+
+  .body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+    gap: 12px;
+    padding: 12px 14px;
+    align-items: start;
+  }
+
+  .mainBlock {
+    margin-bottom: 0;
+    min-width: 0;
+  }
+
+  .sectionTitle {
+    margin-bottom: 8px;
+    font-size: 0.78rem;
+  }
+
+  .description,
+  .list {
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .card {
+    padding: 12px;
+    border-radius: 14px;
+  }
+
+  .tags {
+    gap: 8px;
+  }
+
+  .tag {
+    padding: 6px 10px;
+    font-size: 0.74rem;
+  }
+
+  .footer {
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+    padding: 10px 14px 12px;
+  }
+
+  .linkRow {
+    gap: 8px;
+  }
+
+  .linkButton {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+
+  .footerHint {
+    font-size: 0.72rem;
+    text-align: right;
   }
 }

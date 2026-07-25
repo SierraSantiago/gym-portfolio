@@ -1,14 +1,10 @@
 import { useFrame, useThree } from '@react-three/fiber'
 import { useEffect, useMemo, useRef } from 'react'
 import { MathUtils, PerspectiveCamera, Vector3 } from 'three'
+import { cameraControls } from '../../config/cameraControls'
 import { usePlayerStore } from '../../state/usePlayerStore'
 import { useProjectStore } from '../../state/useProjectStore'
 import { useReceptionStore } from '../../state/useReceptionStore'
-
-const MIN_PITCH = 0.16
-const MAX_PITCH = 0.78
-const MIN_DISTANCE = 3.6
-const MAX_DISTANCE = 7.5
 
 export function SceneCamera() {
   const { camera, gl } = useThree()
@@ -58,8 +54,12 @@ export function SceneCamera() {
 
       const state = usePlayerStore.getState()
       state.setCameraOrbit(
-        state.cameraYaw - deltaX * 0.006,
-        MathUtils.clamp(state.cameraPitch + deltaY * 0.0045, MIN_PITCH, MAX_PITCH),
+        state.cameraYaw - deltaX * cameraControls.yawSensitivity,
+        MathUtils.clamp(
+          state.cameraPitch + deltaY * cameraControls.pitchSensitivity,
+          cameraControls.minPitch,
+          cameraControls.maxPitch,
+        ),
       )
     }
 
@@ -85,13 +85,14 @@ export function SceneCamera() {
       state.setCameraDistance(
         MathUtils.clamp(
           state.cameraDistance + Math.sign(event.deltaY) * 0.45,
-          MIN_DISTANCE,
-          MAX_DISTANCE,
+          cameraControls.minDistance,
+          cameraControls.maxDistance,
         ),
       )
     }
 
     canvas.style.cursor = isDialogOpen || isProjectOpen ? 'default' : 'grab'
+    canvas.style.touchAction = 'none'
     canvas.addEventListener('pointerdown', handlePointerDown)
     canvas.addEventListener('pointermove', handlePointerMove)
     canvas.addEventListener('pointerup', stopDragging)
@@ -100,6 +101,7 @@ export function SceneCamera() {
 
     return () => {
       canvas.style.cursor = 'default'
+      canvas.style.touchAction = 'auto'
       canvas.removeEventListener('pointerdown', handlePointerDown)
       canvas.removeEventListener('pointermove', handlePointerMove)
       canvas.removeEventListener('pointerup', stopDragging)

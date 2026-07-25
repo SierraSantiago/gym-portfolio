@@ -1,0 +1,115 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 14;
+  pointer-events: none;
+}
+
+.joystick {
+  position: fixed;
+  left: 18px;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  width: 132px;
+  height: 132px;
+  border: 1px solid rgba(224, 183, 79, 0.18);
+  border-radius: 999px;
+  background: rgba(7, 7, 9, 0.54);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.joystickRing {
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(224, 183, 79, 0.18);
+  border-radius: 999px;
+}
+
+.joystickThumb {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 54px;
+  height: 54px;
+  margin-top: -27px;
+  margin-left: -27px;
+  border: 1px solid rgba(224, 183, 79, 0.4);
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%, #f3d98e 0%, #c9972b 100%);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.24);
+}
+
+.lookPad {
+  position: fixed;
+  right: 18px;
+  bottom: max(18px, env(safe-area-inset-bottom));
+  display: grid;
+  place-items: center;
+  width: 148px;
+  height: 132px;
+  border: 1px solid rgba(181, 138, 255, 0.2);
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(181, 138, 255, 0.08), rgba(5, 5, 6, 0.56));
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.lookPadLabel {
+  color: rgba(234, 219, 255, 0.84);
+  font-family: 'Bahnschrift', 'Aptos', 'Segoe UI', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+}
+
+.actionButton {
+  position: fixed;
+  left: 50%;
+  bottom: calc(max(18px, env(safe-area-inset-bottom)) + 92px);
+  min-width: min(280px, calc(100vw - 36px));
+  padding: 14px 18px;
+  border: 1px solid rgba(224, 183, 79, 0.28);
+  border-radius: 999px;
+  background: rgba(9, 9, 10, 0.82);
+  color: #f4ecd7;
+  font-family: 'Bahnschrift', 'Aptos', 'Segoe UI', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transform: translateX(-50%);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.3);
+  pointer-events: auto;
+}
+
+@media (min-width: 901px), (pointer: fine) {
+  .overlay {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .joystick {
+    width: 120px;
+    height: 120px;
+  }
+
+  .lookPad {
+    width: 132px;
+    height: 120px;
+  }
+
+  .actionButton {
+    bottom: calc(max(16px, env(safe-area-inset-bottom)) + 132px);
+  }
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .actionButton {
+    bottom: calc(max(10px, env(safe-area-inset-bottom)) + 12px);
+    min-width: min(340px, calc(100vw - 180px));
+    padding: 10px 14px;
+    font-size: 0.8rem;
+  }
+}

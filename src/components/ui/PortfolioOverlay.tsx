@@ -1,4 +1,5 @@
 import type { PortfolioIdentity } from '../../types/portfolio'
+import { useIsMobileDevice } from '../../hooks/useIsMobileDevice'
 import styles from './PortfolioOverlay.module.css'
 
 interface PortfolioOverlayProps {
@@ -6,11 +7,17 @@ interface PortfolioOverlayProps {
 }
 
 export function PortfolioOverlay({ identity }: PortfolioOverlayProps) {
+  const isMobileDevice = useIsMobileDevice()
+
   return (
     <section className={styles.overlay}>
       <header className={styles.panel}>
         <h1 className={styles.title}>{identity.name}</h1>
-        <p className={styles.controls}>WASD move · Shift run · Drag mouse to look · E interact</p>
+        <p className={styles.controls}>
+          {isMobileDevice
+            ? 'Left pad move | Right pad look | Action button interact'
+            : 'WASD move | Shift run | Drag mouse to look | E interact'}
+        </p>
       </header>
     </section>
   )

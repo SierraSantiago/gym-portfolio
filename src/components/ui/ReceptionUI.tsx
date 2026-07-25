@@ -4,6 +4,7 @@ import {
   receptionGreeting,
   receptionistName,
 } from '../../data/receptionDialog'
+import { useIsMobileDevice } from '../../hooks/useIsMobileDevice'
 import { useReceptionStore } from '../../state/useReceptionStore'
 import styles from './ReceptionUI.module.css'
 
@@ -15,6 +16,7 @@ export function ReceptionUI() {
   const openDialog = useReceptionStore((state) => state.openDialog)
   const closeDialog = useReceptionStore((state) => state.closeDialog)
   const selectTopic = useReceptionStore((state) => state.selectTopic)
+  const isMobileDevice = useIsMobileDevice()
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -43,7 +45,7 @@ export function ReceptionUI() {
 
   return (
     <>
-      {isNearReception && !isDialogOpen ? (
+      {isNearReception && !isDialogOpen && !isMobileDevice ? (
         <button className={styles.prompt} type="button" onClick={openDialog}>
           <span className={styles.key}>E</span>
           <span>Press E to talk</span>
@@ -100,7 +102,7 @@ export function ReceptionUI() {
             </div>
 
             <footer className={styles.footer}>
-              <span>Choose a question or press Esc to leave.</span>
+              <span>{isMobileDevice ? 'Choose a question or tap X to leave.' : 'Choose a question or press Esc to leave.'}</span>
               {tourStarted ? (
                 <span className={styles.tourStatus}>Tour active</span>
               ) : null}

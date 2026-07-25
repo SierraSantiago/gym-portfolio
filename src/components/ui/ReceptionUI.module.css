@@ -45,6 +45,8 @@
 
 .dialog {
   width: min(760px, calc(100vw - 32px));
+  max-height: min(82svh, 760px);
+  overflow: auto;
   padding: 22px;
   border: 1px solid rgba(224, 183, 79, 0.34);
   border-radius: 20px;
@@ -197,5 +199,54 @@
 
   .footer {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .backdrop {
+    padding: 0;
+    place-items: stretch;
+    background: rgba(0, 0, 0, 0.88);
+  }
+
+  .dialog {
+    width: 100vw;
+    min-height: 100svh;
+    max-height: 100svh;
+    padding: max(16px, env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom));
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .header {
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .identity {
+    min-width: 0;
+  }
+
+  .name {
+    font-size: 0.95rem;
+  }
+
+  .role {
+    font-size: 0.7rem;
+  }
+
+  .message {
+    font-size: 0.92rem;
+    line-height: 1.58;
+  }
+
+  .option {
+    padding: 13px 14px;
+    font-size: 0.92rem;
+  }
+
+  .footer {
+    padding-bottom: 4px;
   }
 }

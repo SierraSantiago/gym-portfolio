@@ -297,14 +297,24 @@ export function PlayerCharacter() {
     }
 
     const keys = keysRef.current
-    const forwardInput = (keys.has('KeyW') ? 1 : 0) - (keys.has('KeyS') ? 1 : 0)
-    const rightInput = (keys.has('KeyD') ? 1 : 0) - (keys.has('KeyA') ? 1 : 0)
+    const playerState = usePlayerStore.getState()
+    const forwardInput = MathUtils.clamp(
+      (keys.has('KeyW') ? 1 : 0) - (keys.has('KeyS') ? 1 : 0) + playerState.touchMoveY,
+      -1,
+      1,
+    )
+    const rightInput = MathUtils.clamp(
+      (keys.has('KeyD') ? 1 : 0) - (keys.has('KeyA') ? 1 : 0) + playerState.touchMoveX,
+      -1,
+      1,
+    )
     const hasInput = !isDialogOpen && !isProjectOpen && (forwardInput !== 0 || rightInput !== 0)
+    const touchMagnitude = Math.hypot(playerState.touchMoveX, playerState.touchMoveY)
     const isRunning =
-      hasInput && (keys.has('ShiftLeft') || keys.has('ShiftRight'))
+      hasInput && (keys.has('ShiftLeft') || keys.has('ShiftRight') || touchMagnitude > 0.82)
 
     if (hasInput) {
-      const { cameraYaw } = usePlayerStore.getState()
+      const { cameraYaw } = playerState
       forward.set(-Math.sin(cameraYaw), 0, -Math.cos(cameraYaw))
       right.set(Math.cos(cameraYaw), 0, -Math.sin(cameraYaw))
       movementDirection

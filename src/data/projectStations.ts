@@ -10,13 +10,13 @@ export const projectStations: ProjectStationData[] = [
     status: 'Social Hub',
     summary: 'A dedicated stop to understand who Santiago Sierra is beyond the project cards.',
     description:
-      "I'm Santiago Sierra, a Data, AI & Software Engineer who enjoys building practical digital experiences that connect software, automation, and intelligent systems. This gym portfolio reflects the way I like to work: turning technical ideas into something clear, interactive, and memorable. If you want to understand how I think, build, and evolve projects, my GitHub and LinkedIn are the best places to continue the conversation.",
+      "I'm Santiago Sierra, a Data, AI & Cloud Engineer who enjoys building practical digital experiences that connect cloud infrastructure, automation, and intelligent systems. This gym portfolio reflects the way I like to work: turning technical ideas into something clear, interactive, and memorable. If you want to understand how I think, build, and evolve projects, my GitHub and LinkedIn are the best places to continue the conversation.",
     features: [
       'Explore the repositories, experiments, and code structure I share on GitHub.',
       'See my professional profile, experience, and direction on LinkedIn.',
       'Use this station as the best next step if you want to connect, collaborate, or follow my work.',
     ],
-    stack: ['Data', 'AI', 'Software Engineering', 'GitHub', 'LinkedIn'],
+    stack: ['Data', 'AI', 'Cloud Engineering', 'GitHub', 'LinkedIn'],
     links: [
       {
         label: 'GitHub / SierraSantiago',

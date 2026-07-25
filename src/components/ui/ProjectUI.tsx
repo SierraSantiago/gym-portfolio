@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { projectStations } from '../../data/projectStations'
+import { useIsMobileDevice } from '../../hooks/useIsMobileDevice'
 import { useProjectStore } from '../../state/useProjectStore'
 import { useReceptionStore } from '../../state/useReceptionStore'
 import styles from './ProjectUI.module.css'
@@ -11,6 +12,7 @@ export function ProjectUI() {
   const openProject = useProjectStore((state) => state.openProject)
   const closeProject = useProjectStore((state) => state.closeProject)
   const isReceptionOpen = useReceptionStore((state) => state.isDialogOpen)
+  const isMobileDevice = useIsMobileDevice()
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -55,7 +57,7 @@ export function ProjectUI() {
 
   return (
     <>
-      {nearbyProject && !isProjectOpen && !isReceptionOpen ? (
+      {nearbyProject && !isProjectOpen && !isReceptionOpen && !isMobileDevice ? (
         <button
           className={`${styles.prompt} ${isNearbySocialStation ? styles.promptSocial : ''}`}
           type="button"
@@ -149,7 +151,9 @@ export function ProjectUI() {
                 )}
               </div>
 
-              <span className={styles.footerHint}>Press Esc to close the project.</span>
+              <span className={styles.footerHint}>
+                {isMobileDevice ? 'Tap X to close.' : 'Press Esc to close the project.'}
+              </span>
             </footer>
           </article>
         </section>
