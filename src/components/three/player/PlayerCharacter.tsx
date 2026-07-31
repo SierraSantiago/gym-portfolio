@@ -55,8 +55,10 @@ const GYM_BOUNDS = {
 const colliders: ColliderBox[] = [
   // Reception desk.
   { minX: -2.05, maxX: 2.05, minZ: 3.68, maxZ: 4.82 },
+  // Cardio machines, leaving the aisle open between the two treadmills.
+  { minX: -8.55, maxX: -7.1, minZ: -0.45, maxZ: 1.7 },
+  { minX: -5.95, maxX: -4.45, minZ: -0.45, maxZ: 1.7 },
   // Main project stations and the densest free-weight machines.
-  { minX: -8.25, maxX: -5.15, minZ: -1.1, maxZ: 2.1 },
   { minX: -1.35, maxX: 2.2, minZ: -6.15, maxZ: -3.45 },
   { minX: 4.55, maxX: 7.75, minZ: -4.85, maxZ: -1.8 },
   { minX: -5.35, maxX: -3.55, minZ: -6.15, maxZ: -4.55 },
