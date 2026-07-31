@@ -12,6 +12,7 @@ export interface TourStopConfig {
   order: number
   label: string
   position: Vector3Tuple
+  badge?: string
 }
 
 export const projectTourPathSegments: TourPathSegment[] = [
@@ -82,5 +83,40 @@ export const projectTourStops: TourStopConfig[] = [
     order: 5,
     label: 'Right Machines',
     position: [7.05, 0.03, -0.45],
+  },
+] as const
+
+export const socialTourPathSegments: TourPathSegment[] = [
+  {
+    id: 'social-route-entry-drop',
+    position: [0, 0.026, 5.18],
+    size: [0.22, 0.012, 1.28],
+  },
+  {
+    id: 'social-route-left-approach',
+    position: [-3.98, 0.026, 4.85],
+    size: [7.94, 0.012, 0.22],
+  },
+  {
+    id: 'social-route-right-approach',
+    position: [3.98, 0.026, 4.85],
+    size: [7.94, 0.012, 0.22],
+  },
+] as const
+
+export const socialTourStops: TourStopConfig[] = [
+  {
+    id: 'social-tour-stop-1',
+    order: 1,
+    label: 'About Me',
+    badge: 'ME',
+    position: [-7.95, 0.03, 4.85],
+  },
+  {
+    id: 'social-tour-stop-2',
+    order: 2,
+    label: 'Gym Portfolio',
+    badge: 'GP',
+    position: [7.95, 0.03, 4.85],
   },
 ] as const

@@ -9,6 +9,7 @@ export interface ProjectStationData {
   id: string
   title: string
   kind?: 'project' | 'social'
+  tone?: 'project' | 'social' | 'portfolio'
   tourOrder?: number
   position: Vector3Tuple
   interactionRadius: number
@@ -20,4 +21,5 @@ export interface ProjectStationData {
   links?: ProjectLink[]
   githubUrl?: string
   liveUrl?: string
+  accessNote?: string
 }

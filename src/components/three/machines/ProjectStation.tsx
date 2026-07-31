@@ -13,9 +13,9 @@ export function ProjectStation({ station }: ProjectStationProps) {
   const isNearby = useProjectStore((state) => state.nearbyProjectId === station.id)
   const openProject = useProjectStore((state) => state.openProject)
   const markerRef = useRef<ThreeGroup>(null)
-  const isSocialStation = station.kind === 'social'
-  const markerColor = isSocialStation ? gymTheme.colors.socialMarker : gymTheme.colors.marker
-  const markerGlowColor = isSocialStation
+  const isPurpleStation = station.tone === 'social' || station.tone === 'portfolio'
+  const markerColor = isPurpleStation ? gymTheme.colors.socialMarker : gymTheme.colors.marker
+  const markerGlowColor = isPurpleStation
     ? gymTheme.colors.socialMarkerGlow
     : gymTheme.colors.markerGlow
 

@@ -4,10 +4,25 @@ import { gymTheme } from '../../../config/gymTheme'
 import {
   projectTourPathSegments,
   projectTourStops,
+  socialTourPathSegments,
+  socialTourStops,
   type TourStopConfig,
 } from '../../../data/projectRoute'
 
-function TourStopMarker({ stop }: { stop: TourStopConfig }) {
+interface RoutePalette {
+  path: string
+  pathGlow: string
+  disc: string
+  discGlow: string
+}
+
+function TourStopMarker({
+  stop,
+  palette,
+}: {
+  stop: TourStopConfig
+  palette: RoutePalette
+}) {
   const numberTexture = useMemo(() => {
     const canvas = document.createElement('canvas')
     canvas.width = 256
@@ -17,10 +32,14 @@ function TourStopMarker({ stop }: { stop: TourStopConfig }) {
     if (context) {
       context.clearRect(0, 0, canvas.width, canvas.height)
       context.fillStyle = '#f7ebc6'
-      context.font = '700 132px Bahnschrift, Aptos, Segoe UI, sans-serif'
+      context.font = stop.badge ? '700 72px Bahnschrift, Aptos, Segoe UI, sans-serif' : '700 132px Bahnschrift, Aptos, Segoe UI, sans-serif'
       context.textAlign = 'center'
       context.textBaseline = 'middle'
-      context.fillText(String(stop.order), canvas.width / 2, canvas.height / 2 + 4)
+      context.fillText(
+        stop.badge ?? String(stop.order),
+        canvas.width / 2,
+        canvas.height / 2 + 4,
+      )
     }
 
     const texture = new CanvasTexture(canvas)
@@ -33,8 +52,8 @@ function TourStopMarker({ stop }: { stop: TourStopConfig }) {
       <mesh>
         <cylinderGeometry args={[0.24, 0.24, 0.018, 28]} />
         <meshStandardMaterial
-          color={gymTheme.colors.routeDisc}
-          emissive={gymTheme.colors.routeDiscGlow}
+          color={palette.disc}
+          emissive={palette.discGlow}
           emissiveIntensity={0.9}
           roughness={0.24}
           metalness={0.1}
@@ -51,31 +70,73 @@ function TourStopMarker({ stop }: { stop: TourStopConfig }) {
 }
 
 export function GymTourRoute() {
+  const projectPalette: RoutePalette = {
+    path: gymTheme.colors.routePath,
+    pathGlow: gymTheme.colors.routePathGlow,
+    disc: gymTheme.colors.routeDisc,
+    discGlow: gymTheme.colors.routeDiscGlow,
+  }
+
+  const socialPalette: RoutePalette = {
+    path: gymTheme.colors.socialRoutePath,
+    pathGlow: gymTheme.colors.socialRoutePathGlow,
+    disc: gymTheme.colors.socialRouteDisc,
+    discGlow: gymTheme.colors.socialRouteDiscGlow,
+  }
+
   return (
     <group>
-      {projectTourPathSegments.map((segment) => (
-        <group
-          key={segment.id}
-          position={segment.position}
-          rotation={segment.rotation ?? [0, 0, 0]}
-        >
-          <mesh>
-            <boxGeometry args={segment.size} />
-            <meshStandardMaterial
-              color={gymTheme.colors.routePath}
-              emissive={gymTheme.colors.routePathGlow}
-              emissiveIntensity={1.15}
-              roughness={0.34}
-              metalness={0.08}
-              toneMapped={false}
-            />
-          </mesh>
-        </group>
-      ))}
+      <group>
+        {projectTourPathSegments.map((segment) => (
+          <group
+            key={segment.id}
+            position={segment.position}
+            rotation={segment.rotation ?? [0, 0, 0]}
+          >
+            <mesh>
+              <boxGeometry args={segment.size} />
+              <meshStandardMaterial
+                color={projectPalette.path}
+                emissive={projectPalette.pathGlow}
+                emissiveIntensity={1.15}
+                roughness={0.34}
+                metalness={0.08}
+                toneMapped={false}
+              />
+            </mesh>
+          </group>
+        ))}
 
-      {projectTourStops.map((stop) => (
-        <TourStopMarker key={stop.id} stop={stop} />
-      ))}
+        {projectTourStops.map((stop) => (
+          <TourStopMarker key={stop.id} stop={stop} palette={projectPalette} />
+        ))}
+      </group>
+
+      <group>
+        {socialTourPathSegments.map((segment) => (
+          <group
+            key={segment.id}
+            position={segment.position}
+            rotation={segment.rotation ?? [0, 0, 0]}
+          >
+            <mesh>
+              <boxGeometry args={segment.size} />
+              <meshStandardMaterial
+                color={socialPalette.path}
+                emissive={socialPalette.pathGlow}
+                emissiveIntensity={1.15}
+                roughness={0.34}
+                metalness={0.08}
+                toneMapped={false}
+              />
+            </mesh>
+          </group>
+        ))}
+
+        {socialTourStops.map((stop) => (
+          <TourStopMarker key={stop.id} stop={stop} palette={socialPalette} />
+        ))}
+      </group>
     </group>
   )
 }

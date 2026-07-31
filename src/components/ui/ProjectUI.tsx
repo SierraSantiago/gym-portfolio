@@ -42,8 +42,9 @@ export function ProjectUI() {
 
   const nearbyProject = projectStations.find((project) => project.id === nearbyProjectId)
   const activeProject = projectStations.find((project) => project.id === activeProjectId)
-  const isNearbySocialStation = nearbyProject?.kind === 'social'
-  const isSocialStation = activeProject?.kind === 'social'
+  const activeTone = activeProject?.tone ?? (activeProject?.kind === 'social' ? 'social' : 'project')
+  const nearbyTone = nearbyProject?.tone ?? (nearbyProject?.kind === 'social' ? 'social' : 'project')
+  const isNearbyPurpleStation = nearbyTone === 'social' || nearbyTone === 'portfolio'
   const resolvedLinks = activeProject?.links?.length
     ? activeProject.links
     : [
@@ -54,12 +55,13 @@ export function ProjectUI() {
           ? [{ label: 'Live Demo', url: activeProject.liveUrl }]
           : []),
       ]
+  const accessNote = activeProject?.accessNote
 
   return (
     <>
       {nearbyProject && !isProjectOpen && !isReceptionOpen && !isMobileDevice ? (
         <button
-          className={`${styles.prompt} ${isNearbySocialStation ? styles.promptSocial : ''}`}
+          className={`${styles.prompt} ${isNearbyPurpleStation ? styles.promptSocial : ''}`}
           type="button"
           onClick={() => openProject(nearbyProject.id)}
         >
@@ -75,7 +77,7 @@ export function ProjectUI() {
           aria-modal="true"
           aria-labelledby="project-panel-title"
         >
-          <article className={`${styles.panel} ${isSocialStation ? styles.panelSocial : ''}`}>
+          <article className={`${styles.panel} ${activeTone !== 'project' ? styles.panelSocial : ''}`}>
             <header className={styles.header}>
               <div>
                 <p className={styles.eyebrow}>{activeProject.status}</p>
@@ -98,7 +100,11 @@ export function ProjectUI() {
             <div className={styles.body}>
               <section className={styles.mainBlock}>
                 <h3 className={styles.sectionTitle}>
-                  {isSocialStation ? 'About This Space' : 'Project Overview'}
+                  {activeTone === 'social'
+                    ? 'About This Space'
+                    : activeTone === 'portfolio'
+                      ? 'About This Project'
+                      : 'Project Overview'}
                 </h3>
                 <p className={styles.description}>{activeProject.description}</p>
               </section>
@@ -106,7 +112,11 @@ export function ProjectUI() {
               <section className={styles.grid}>
                 <div className={styles.card}>
                   <h3 className={styles.sectionTitle}>
-                    {isSocialStation ? 'What You Can Find Here' : 'Functions'}
+                    {activeTone === 'social'
+                      ? 'What You Can Find Here'
+                      : activeTone === 'portfolio'
+                        ? 'What This Project Uses'
+                        : 'Functions'}
                   </h3>
                   <ul className={styles.list}>
                     {activeProject.features.map((feature) => (
@@ -117,7 +127,11 @@ export function ProjectUI() {
 
                 <div className={styles.card}>
                   <h3 className={styles.sectionTitle}>
-                    {isSocialStation ? 'Platforms' : 'Stack'}
+                    {activeTone === 'social'
+                      ? 'Platforms'
+                      : activeTone === 'portfolio'
+                        ? 'Stack & Tools'
+                        : 'Stack'}
                   </h3>
                   <div className={styles.tags}>
                     {activeProject.stack.map((item) => (
@@ -146,7 +160,7 @@ export function ProjectUI() {
                   ))
                 ) : (
                   <span className={styles.linkPlaceholder}>
-                    Add GitHub link in `src/data/projectStations.ts`
+                    {accessNote ?? 'Add GitHub link in `src/data/projectStations.ts`'}
                   </span>
                 )}
               </div>
