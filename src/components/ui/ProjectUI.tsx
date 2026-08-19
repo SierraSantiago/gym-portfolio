@@ -45,13 +45,14 @@ export function ProjectUI() {
   const activeTone = activeProject?.tone ?? (activeProject?.kind === 'social' ? 'social' : 'project')
   const nearbyTone = nearbyProject?.tone ?? (nearbyProject?.kind === 'social' ? 'social' : 'project')
   const isNearbyPurpleStation = nearbyTone === 'social' || nearbyTone === 'portfolio'
+  const isCareerPulseProject = activeProject?.id === 'career-pulse' && Boolean(activeProject.liveUrl)
   const resolvedLinks = activeProject?.links?.length
     ? activeProject.links
     : [
         ...(activeProject?.githubUrl
           ? [{ label: 'GitHub', url: activeProject.githubUrl }]
           : []),
-        ...(activeProject?.liveUrl
+        ...(!isCareerPulseProject && activeProject?.liveUrl
           ? [{ label: 'Live Demo', url: activeProject.liveUrl }]
           : []),
       ]
@@ -79,7 +80,7 @@ export function ProjectUI() {
         >
           <article className={`${styles.panel} ${activeTone !== 'project' ? styles.panelSocial : ''}`}>
             <header className={styles.header}>
-              <div>
+              <div className={styles.headerContent}>
                 <p className={styles.eyebrow}>{activeProject.status}</p>
                 <h2 className={styles.title} id="project-panel-title">
                   {activeProject.title}
@@ -87,14 +88,29 @@ export function ProjectUI() {
                 <p className={styles.summary}>{activeProject.summary}</p>
               </div>
 
-              <button
-                className={styles.close}
-                type="button"
-                aria-label="Close project panel"
-                onClick={closeProject}
-              >
-                X
-              </button>
+              <div className={styles.headerActions}>
+                {isCareerPulseProject ? (
+                  <a
+                    className={styles.headerLink}
+                    href={activeProject.liveUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Visit the CareerPulse website in a new tab"
+                  >
+                    <span className={styles.headerLinkLabel}>Visit</span>
+                    <span className={styles.headerLinkLabel}>Website</span>
+                  </a>
+                ) : null}
+
+                <button
+                  className={styles.close}
+                  type="button"
+                  aria-label="Close project panel"
+                  onClick={closeProject}
+                >
+                  X
+                </button>
+              </div>
             </header>
 
             <div className={styles.body}>

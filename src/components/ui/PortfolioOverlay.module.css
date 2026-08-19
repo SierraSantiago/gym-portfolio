@@ -44,7 +44,6 @@
   text-shadow: 0 10px 32px rgba(0, 0, 0, 0.34);
 }
 
-
 .controls {
   margin: 14px 0 0;
   color: rgba(245, 247, 251, 0.72);
@@ -87,4 +86,5 @@
         rgba(6, 8, 13, 0) 78%
       );
   }
+
 }
